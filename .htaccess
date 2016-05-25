@@ -1,0 +1,25 @@
+DirectoryIndex /adminka/index.php
+
+# Turn on URL rewriting
+RewriteEngine On
+
+# Installation directory
+RewriteBase /adminka/
+
+# Protect application and system files from being viewed
+# This is only necessary when these files are inside the webserver document root
+RewriteRule ^(?:application|modules|system)\b index.php/$0 [L]
+
+# Allow any files or directories that exist to be displayed directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite all other URLs to index.php/URL
+
+#СТАРЫЙ РЕВРАЙТ
+#RewriteRule .* index.php/$0 [PT,L]
+
+RewriteRule ^(.+)$ index.php?kohana_uri=$1 [QSA]
+
+# Alternativly, if the rewrite rule above does not work try this instead:
+#RewriteRule .* index.php?kohana_uri=$0 [PT,QSA,L]
